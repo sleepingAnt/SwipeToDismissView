@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SwipeView</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="example">swipe view example</string>
+    <string name="action_settings">Settings</string>
+</resources>
