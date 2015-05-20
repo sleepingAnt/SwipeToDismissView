@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -58,11 +59,13 @@ public class SwipeView extends FrameLayout {
      */
     public void removeTopItem(boolean withAnimation) {
         if (getChildCount() == 0) return;
-        if (currentRemovingItemPosition == getChildCount() - 1) {
-            currentRemovingItemPosition--;
-        } else {
+        if (currentRemovingItemPosition == -1 || currentRemovingItemPosition > getChildCount() - 1) {
             currentRemovingItemPosition = getChildCount() - 1;
+        } else if (currentRemovingItemPosition <= getChildCount() - 1) {
+            currentRemovingItemPosition--;
         }
+        if (currentRemovingItemPosition < 0) return;
+        Log.i("position", currentRemovingItemPosition + "");
 
         if (withAnimation) {
             final View childAt = getChildAt(currentRemovingItemPosition);

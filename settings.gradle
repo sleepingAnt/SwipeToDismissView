@@ -1,1 +1,1 @@
-include ':app', ':swipeviewlibrary'
+include ':sample', ':swipeviewlibrary'
