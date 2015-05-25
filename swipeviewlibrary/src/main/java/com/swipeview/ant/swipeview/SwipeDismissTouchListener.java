@@ -78,22 +78,6 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
     private float mTranslationX;
 
     /**
-     * The callback interface used by {@link SwipeDismissTouchListener} to
-     * inform its client about a successful dismissal of the view for which it
-     * was created.
-     */
-    public interface OnDismissCallback {
-        /**
-         * Called when the user has indicated they she would like to dismiss the
-         * view.
-         *
-         * @param view  The originating {@link View} to be dismissed.
-         * @param token The optional token passed to this object's constructor.
-         */
-        void onDismiss(View view, Object token);
-    }
-
-    /**
      * Constructs a new swipe-to-dismiss touch listener for the given view.
      *
      * @param view     The view to make dismissable.
@@ -203,12 +187,12 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
                     mSwiping = true;
                     mView.getParent().requestDisallowInterceptTouchEvent(true);
 
-                    // Cancel listview's touch
-                    // MotionEvent cancelEvent = MotionEvent.obtain(motionEvent);
-                    // cancelEvent.setAction(MotionEvent.ACTION_CANCEL |
-                    // (motionEvent.getActionIndex() <<
-                    // MotionEvent.ACTION_POINTER_INDEX_SHIFT));
-                    // mView.onTouchEvent(cancelEvent);
+                    // Cancel view's touch
+                    MotionEvent cancelEvent = MotionEvent.obtain(motionEvent);
+                    cancelEvent.setAction(MotionEvent.ACTION_CANCEL |
+                            (motionEvent.getActionIndex() <<
+                                    MotionEvent.ACTION_POINTER_INDEX_SHIFT));
+                    mView.onTouchEvent(cancelEvent);
                 }
 
                 if (mSwiping) {
@@ -270,5 +254,21 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
             }
         });
         animator.start();
+    }
+
+    /**
+     * The callback interface used by {@link SwipeDismissTouchListener} to
+     * inform its client about a successful dismissal of the view for which it
+     * was created.
+     */
+    public interface OnDismissCallback {
+        /**
+         * Called when the user has indicated they she would like to dismiss the
+         * view.
+         *
+         * @param view  The originating {@link View} to be dismissed.
+         * @param token The optional token passed to this object's constructor.
+         */
+        void onDismiss(View view, Object token);
     }
 }
